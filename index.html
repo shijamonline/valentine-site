@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Thachuski 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .container {
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: white;
+        text-shadow: 2px 2px 6px #ff4e50;
+        padding: 0 20px;
+    }
+
+    .buttons {
+        margin-top: 30px;
+        position: relative;
+        height: 200px;
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: 0.3s;
+        position: absolute;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    #yesBtn {
+        background-color: #ff4e50;
+        color: white;
+        left: 35%;
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        background-color: #444;
+        color: white;
+        left: 55%;
+    }
+
+    /* Floating hearts */
+    .heart {
+        position: absolute;
+        color: white;
+        font-size: 20px;
+        animation: float 6s linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(100vh); }
+        100% { transform: translateY(-10vh); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Will you be my Valentine Thachuski? 💖</h1>
+    <div class="buttons">
+        <button id="yesBtn">Yes 💕</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    // Make "No" button run away
+    noBtn.addEventListener("mouseover", () => {
+        const randomX = Math.random() * 80;
+        const randomY = Math.random() * 70;
+
+        noBtn.style.left = randomX + "vw";
+        noBtn.style.top = randomY + "vh";
+    });
+
+    // When she clicks YES 💖
+    yesBtn.addEventListener("click", () => {
+        document.body.innerHTML = `
+            <h1 style="
+                color:white;
+                font-size:3rem;
+                text-align:center;
+                padding:20px;
+            ">
+                Thachuski said YES!!! 💖🥰<br><br>
+                Best Valentine Ever ❤️
+            </h1>
+        `;
+        createHearts();
+    });
+
+    // Floating hearts generator
+    function createHearts() {
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "💖";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = Math.random() * 30 + 20 + "px";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }, 300);
+    }
+
+    // Initial floating hearts background
+    createHearts();
+</script>
+
+</body>
+</html>
+
