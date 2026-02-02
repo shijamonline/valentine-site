@@ -6,17 +6,20 @@
 <title>For Thachuski 💖</title>
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Comic Sans MS', cursive, sans-serif;
-        background: linear-gradient(135deg, #ff758c, #ff7eb3);
-        overflow: hidden;
-        position: relative;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+
+    background: 
+        linear-gradient(rgba(255, 120, 150, 0.5), rgba(255, 120, 150, 0.5)),
+        url("love.jpg") no-repeat center center;
+
+    background-size: cover;
+}
 
     .container {
         text-align: center;
@@ -32,9 +35,12 @@
     }
 
     .buttons {
-        margin-top: 30px;
+        margin-top: 40px;
         position: relative;
-        height: 200px;
+        width: 350px;
+        height: 220px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     button {
@@ -43,15 +49,16 @@
         border: none;
         border-radius: 40px;
         cursor: pointer;
-        transition: 0.3s;
         position: absolute;
+        transition: all 0.25s ease;
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     #yesBtn {
         background-color: #ff4e50;
         color: white;
-        left: 35%;
+        left: 30px;
+        top: 80px;
     }
 
     #yesBtn:hover {
@@ -61,21 +68,26 @@
     #noBtn {
         background-color: #444;
         color: white;
-        left: 55%;
+        right: 30px;
+        top: 80px;
     }
 
     /* Floating hearts */
     .heart {
         position: absolute;
-        color: white;
         font-size: 20px;
-        animation: float 6s linear infinite;
-        opacity: 0.8;
+        animation: float 6s linear forwards;
     }
 
     @keyframes float {
-        0% { transform: translateY(100vh); }
-        100% { transform: translateY(-10vh); }
+        from {
+            transform: translateY(100vh);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-10vh);
+            opacity: 0;
+        }
     }
 </style>
 </head>
@@ -84,6 +96,7 @@
 
 <div class="container">
     <h1>Will you be my Valentine Thachuski? 💖</h1>
+
     <div class="buttons">
         <button id="yesBtn">Yes 💕</button>
         <button id="noBtn">No 😢</button>
@@ -93,33 +106,55 @@
 <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const buttonArea = document.querySelector(".buttons");
 
-    // Make "No" button run away
-    noBtn.addEventListener("mouseover", () => {
-        const randomX = Math.random() * 80;
-        const randomY = Math.random() * 70;
+    function moveNoButton() {
+        const areaRect = buttonArea.getBoundingClientRect();
+        const btnWidth = noBtn.offsetWidth;
+        const btnHeight = noBtn.offsetHeight;
 
-        noBtn.style.left = randomX + "vw";
-        noBtn.style.top = randomY + "vh";
+        const maxX = areaRect.width - btnWidth;
+        const maxY = areaRect.height - btnHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+    }
+
+    // Desktop hover
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Extra safety (click attempt)
+    noBtn.addEventListener("mousedown", moveNoButton);
+
+    // Mobile touch
+    noBtn.addEventListener("touchstart", function(e) {
+        e.preventDefault();
+        moveNoButton();
     });
 
-    // When she clicks YES 💖
+    // YES button success
     yesBtn.addEventListener("click", () => {
         document.body.innerHTML = `
-            <h1 style="
+            <div style="
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                height:100vh;
+                flex-direction:column;
+                background:linear-gradient(135deg, #ff758c, #ff7eb3);
                 color:white;
-                font-size:3rem;
                 text-align:center;
-                padding:20px;
             ">
-                Thachuski said YES!!! 💖🥰<br><br>
-                Best Valentine Ever ❤️
-            </h1>
+                <h1 style="font-size:3rem;">Thachuski said YES!!! 💖🥰</h1>
+                <p style="font-size:1.5rem;">Best Valentine Ever ❤️</p>
+            </div>
         `;
         createHearts();
     });
 
-    // Floating hearts generator
     function createHearts() {
         setInterval(() => {
             const heart = document.createElement("div");
@@ -134,9 +169,6 @@
             }, 6000);
         }, 300);
     }
-
-    // Initial floating hearts background
-    createHearts();
 </script>
 
 </body>
